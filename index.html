@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Elegant Market — E-Commerce Assignment</title>
+    <style>
+      :root {
+        --accent: #ff76c8;
+        --accent2: #8b5cf6;
+        --bg: #0b0710;
+        --card: #121217;
+        --muted: #bdbdd0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, Segoe UI, Arial;
+        background: var(--bg);
+        color: #fff;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 20px;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+      }
+      .brand {
+        font-weight: 800;
+        font-size: 1.2rem;
+      }
+      nav {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+      }
+      nav a:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .top-payment {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .pay-pill {
+        background: rgba(0, 0, 0, 0.25);
+        padding: 6px 10px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+      }
+      main {
+        padding: 20px;
+      }
+
+      /* hero */
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 20px;
+        align-items: center;
+        max-width: 1200px;
+        margin: 20px auto;
+      }
+      .hero-left {
+        background-image: url("https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=1400&auto=format&fit=crop");
+        background-size: cover;
+        background-position: center;
+        padding: 40px;
+        border-radius: 14px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      }
+      .hero-left h1 {
+        margin: 0;
+        font-size: 2.2rem;
+      }
+      .hero-left p {
+        color: var(--muted);
+        margin-top: 10px;
+      }
+      .hero-right {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.03),
+          rgba(0, 0, 0, 0.2)
+        );
+        padding: 18px;
+        border-radius: 12px;
+      }
+
+      /* cards */
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-top: 18px;
+      }
+      .card {
+        background: var(--card);
+        padding: 12px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(139, 92, 246, 0.06);
+        display: flex;
+        flex-direction: column;
+      }
+      .card img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      .card h4 {
+        margin: 10px 0 6px;
+      }
+      .card .meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .btn {
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #111;
+      }
+      .btn-ghost {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        color: #ddd;
+      }
+
+      /* forms & pages */
+      .page {
+        max-width: 1000px;
+        margin: 20px auto;
+        display: none;
+      }
+      .page.active {
+        display: block;
+      }
+      .form {
+        background: var(--card);
+        padding: 16px;
+        border-radius: 12px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 8px;
+        border: none;
+        background: #0c0c0f;
+        color: #fff;
+      }
+
+      /* cart / wishlist */
+      .list-item {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 10px;
+        background: #0f0f12;
+        border-radius: 10px;
+      }
+      .thumb {
+        width: 84px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      footer {
+        padding: 20px;
+        text-align: center;
+        color: var(--muted);
+      }
+      @media (max-width: 880px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .hero-right {
+          order: -1;
+        }
+      }
+      :root {
+        --primary: #ffb5d4e1;
+        --bg: #ffe6f2;
+        --text: #4a4a4a;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, var(--bg), #fff8fc);
+        margin: 0;
+        padding: 0;
+        color: var(--text);
+      }
+      button {
+        background: var(--primary);
+        border: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+      }
+      button:hover {
+        background: #f0aac8d7;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">Elegant Market</div>
+      <nav>
+        <a href="#" onclick="showPage('home')">Home</a>
+        <a href="#" onclick="showPage('products')">Products</a>
+        <a href="#" onclick="showPage('cart')"
+          >Cart (<span id="cartCount">0</span>)</a
+        >
+        <a href="#" onclick="showPage('wishlist')"
+          >Wishlist (<span id="wishCount">0</span>)</a
+        >
+        <a href="#" onclick="showPage('register')">Register</a>
+        <a href="#" onclick="showPage('login')">Login</a>
+        <div class="top-payment">
+          <div class="pay-pill">UPI</div>
+          <div class="pay-pill">Card</div>
+          <div class="pay-pill">NetBanking</div>
+          <div class="pay-pill">Wallets</div>
+          <div class="pay-pill">COD</div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- HOME -->
+      <section id="home" class="page active">
+        <div class="hero">
+          <div class="hero-left">
+            <h1>Shop the best — curated, aesthetic, premium</h1>
+            <p>
+              Explore lifestyle essentials, tech, fashion and home decor. Fast
+              checkout • Secure payments • Wishlist & Orders
+            </p>
+            <div style="margin-top: 18px; display: flex; gap: 12px">
+              <button class="btn btn-primary" onclick="showPage('products')">
+                Shop Now
+              </button>
+              <button class="btn btn-ghost" onclick="showPage('products')">
+                Explore Collections
+              </button>
+            </div>
+            <div style="margin-top: 18px; color: var(--muted)">
+              Free delivery on orders ₹999+
+            </div>
+          </div>
+          <aside class="hero-right">
+            <h3>Top Picks for you</h3>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                margin-top: 10px;
+              "
+            >
+              <div
+                style="
+                  background: url('https://images.unsplash.com/photo-1520975918318-fb4a6f7f04c9?q=80&w=400&auto=format&fit=crop');
+                  background-size: cover;
+                  height: 90px;
+                  border-radius: 8px;
+                "
+              ></div>
+              <div
+                style="
+                  background: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=400&auto=format&fit=crop');
+                  background-size: cover;
+                  height: 90px;
+                  border-radius: 8px;
+                "
+              ></div>
+              <div
+                style="
+                  background: url('https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=400&auto=format&fit=crop');
+                  background-size: cover;
+                  height: 90px;
+                  border-radius: 8px;
+                "
+              ></div>
+              <div
+                style="
+                  background: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=400&auto=format&fit=crop');
+                  background-size: cover;
+                  height: 90px;
+                  border-radius: 8px;
+                "
+              ></div>
+            </div>
+          </aside>
+        </div>
+
+        <section style="max-width: 1200px; margin: 18px auto">
+          <h2 style="margin: 0 0 10px">Trending Categories</h2>
+          <div
+            style="
+              display: flex;
+              gap: 12px;
+              overflow: auto;
+              padding-bottom: 8px;
+            "
+          >
+            <div
+              style="
+                min-width: 160px;
+                background: linear-gradient(
+                  90deg,
+                  var(--accent),
+                  var(--accent2)
+                );
+                padding: 12px;
+                border-radius: 12px;
+              "
+            >
+              Bags & Travel
+            </div>
+            <div
+              style="
+                min-width: 160px;
+                background: #16161a;
+                padding: 12px;
+                border-radius: 12px;
+              "
+            >
+              Tech & Gadgets
+            </div>
+            <div
+              style="
+                min-width: 160px;
+                background: #16161a;
+                padding: 12px;
+                border-radius: 12px;
+              "
+            >
+              Home & Decor
+            </div>
+            <div
+              style="
+                min-width: 160px;
+                background: #16161a;
+                padding: 12px;
+                border-radius: 12px;
+              "
+            >
+              Beauty & Care
+            </div>
+            <div
+              style="
+                min-width: 160px;
+                background: #16161a;
+                padding: 12px;
+                border-radius: 12px;
+              "
+            >
+              Fitness
+            </div>
+          </div>
+        </section>
+
+        <section style="max-width: 1200px; margin: 18px auto">
+          <h2 style="margin: 0 0 10px">Featured Products</h2>
+          <div id="homeProducts" class="product-grid"></div>
+        </section>
+      </section>
+
+      <!-- PRODUCTS -->
+      <section id="products" class="page">
+        <div
+          style="
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <h2>All Products</h2>
+          <div style="display: flex; gap: 8px">
+            <input
+              id="search"
+              placeholder="Search products..."
+              style="
+                padding: 8px;
+                border-radius: 8px;
+                border: none;
+                background: #fbfcfc00;
+                color: #0a0a0a;
+              "
+              oninput="renderProducts()"
+            />
+            <select
+              id="sort"
+              onchange="renderProducts()"
+              style="
+                padding: 8px;
+                border-radius: 8px;
+                background: #0f0f12;
+                color: #fff;
+              "
+            >
+              <option value="">Sort</option>
+              <option value="price-asc">Price Low → High</option>
+              <option value="price-desc">Price High → Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div
+          id="grid"
+          class="product-grid"
+          style="max-width: 1200px; margin: 18px auto"
+        ></div>
+      </section>
+
+      <!-- CART -->
+      <section id="cart" class="page">
+        <h2>Your Cart</h2>
+        <div id="cartList" style="max-width: 900px; margin-top: 12px"></div>
+        <div
+          style="
+            max-width: 900px;
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div class="muted">Secure Checkout</div>
+          <div>
+            <strong>Total: ₹<span id="totalAmt">0</span></strong>
+            <button
+              class="btn btn-primary"
+              style="margin-left: 12px"
+              onclick="showPage('address')"
+            >
+              Proceed to Checkout
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- WISHLIST -->
+      <section id="wishlist" class="page">
+        <h2>Your Wishlist</h2>
+        <div id="wishList" style="max-width: 900px; margin-top: 12px"></div>
+      </section>
+
+      <!-- REGISTER -->
+      <section id="register" class="page">
+        <div style="max-width: 520px; margin: 0 auto" class="form">
+          <h2>Create Account</h2>
+          <input id="rName" placeholder="Full name" />
+          <input id="rEmail" placeholder="Email" />
+          <input id="rPass" type="password" placeholder="Password" />
+          <button class="btn btn-primary" onclick="doRegister()">
+            Register
+          </button>
+          <p id="rMsg" class="muted"></p>
+        </div>
+      </section>
+
+      <!-- LOGIN -->
+      <section id="login" class="page">
+        <div style="max-width: 520px; margin: 0 auto" class="form">
+          <div
+            style="
+              background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop');
+              background-size: cover;
+              padding: 16px;
+              border-radius: 8px;
+              margin-bottom: 12px;
+            "
+          >
+            <h2 style="margin: 0">Welcome back</h2>
+          </div>
+          <input id="lEmail" placeholder="Email" />
+          <input id="lPass" type="password" placeholder="Password" />
+          <button class="btn btn-primary" onclick="doLogin()">Login</button>
+          <p id="lMsg" class="muted"></p>
+        </div>
+      </section>
+
+      <!-- ADDRESS -->
+      <section id="address" class="page">
+        <div style="max-width: 520px; margin: 0 auto" class="form">
+          <h2>Delivery Address</h2>
+          <input id="aName" placeholder="Full name" />
+          <input id="aPhone" placeholder="Phone" />
+          <textarea id="aLine" placeholder="Address line" rows="3"></textarea>
+          <div style="display: flex; gap: 8px">
+            <input id="aCity" placeholder="City" /><input
+              id="aPin"
+              placeholder="Pincode"
+              style="width: 140px"
+            />
+          </div>
+          <button class="btn btn-primary" onclick="goPayment()">
+            Continue to Payment
+          </button>
+        </div>
+      </section>
+
+      <!-- PAYMENT -->
+      <section id="payment" class="page">
+        <div style="max-width: 520px; margin: 0 auto" class="form">
+          <h2>Payment Methods</h2>
+          <select id="payMethod" onchange="toggleCard()">
+            <option value="">Choose method</option>
+            <option value="UPI">UPI</option>
+            <option value="Card">Credit / Debit Card</option>
+            <option value="NetBanking">Net Banking</option>
+            <option value="Wallet">Wallets (Paytm, etc.)</option>
+            <option value="COD">Cash on Delivery</option>
+          </select>
+          <div id="cardBox" style="display: none; margin-top: 12px">
+            <input id="cardNo" placeholder="Card number" />
+            <div style="display: flex; gap: 8px">
+              <input id="cardExp" placeholder="MM/YY" /><input
+                id="cardCvv"
+                placeholder="CVV"
+                style="width: 120px"
+              />
+            </div>
+          </div>
+          <p class="muted" style="margin-top: 8px">
+            Supported: UPI, Visa, MasterCard, American Express, NetBanking,
+            Paytm Wallet. (Demo only — no real payments)
+          </p>
+          <button class="btn btn-primary" onclick="completeOrder()">
+            Pay & Place Order
+          </button>
+        </div>
+      </section>
+
+      <!-- CONFIRM -->
+      <section id="confirm" class="page">
+        <div
+          style="max-width: 720px; margin: 0 auto"
+          class="form"
+          id="confirmBox"
+        ></div>
+      </section>
+    </main>
+
+    <footer>Elegant Market — Demo E-Commerce Assignment</footer>
+
+    <script>
+      // Data: Keep 30 styled products with real names, categories, brands, ratings
+      const products = [
+        {
+          id: 101,
+          name: "Stainless Steel Water Bottle",
+          category: "Fitness",
+          brand: "HydraFit",
+          rating: 4.4,
+          price: 699,
+          img: "https://cdn.shopify.com/s/files/1/0104/9211/7092/files/Steel_Flasks_Mobile_9fc4541e-f969-4b55-a80a-d1e6250fb42e.jpg?v=1709120027",
+        },
+        {
+          id: 102,
+          name: "Running Sports Shoes",
+          category: "Footwear",
+          brand: "SwiftStep",
+          rating: 4.6,
+          price: 1899,
+          img: "https://runkeeper.com/cms/wp-content/uploads/sites/4/2021/04/SS23_GEL-CUMULUS-25_Highlight_CHIASI0016_SH09_03_FINAL-640x341.jpg",
+        },
+        {
+          id: 103,
+          name: "Canvas Travel Backpack",
+          category: "Bags & Travel",
+          brand: "UrbanCraft",
+          rating: 4.5,
+          price: 1199,
+          img: "https://i.etsystatic.com/5318309/r/il/a7246e/1228488242/il_570xN.1228488242_alap.jpg",
+        },
+        {
+          id: 104,
+          name: "Wireless Bluetooth Earbuds",
+          category: "Tech & Gadgets",
+          brand: "AeroSound",
+          rating: 4.3,
+          price: 1499,
+          img: "https://5.imimg.com/data5/SELLER/Default/2021/8/SK/DG/NX/135508893/884b3cceac47cc5428222a597fbf39ab-1-.png",
+        },
+        {
+          id: 105,
+          name: "Warm Glow Table Lamp",
+          category: "Home & Decor",
+          brand: "GlowNest",
+          rating: 4.6,
+          price: 1599,
+          img: "https://i.etsystatic.com/43745484/r/il/03e726/6750679610/il_570xN.6750679610_j6e7.jpg",
+        },
+        {
+          id: 106,
+          name: "Ceramic Coffee Mug Set",
+          category: "Home & Kitchen",
+          brand: "CeraHome",
+          rating: 4.4,
+          price: 499,
+          img: "https://rukminim2.flixcart.com/image/480/640/xif0q/mug/k/b/o/divine-shop-adventure-edition-tea-cups-with-modern-set-of-6-original-imagpycaf6sz4uzu.jpeg?q=90",
+        },
+        {
+          id: 107,
+          name: "Premium Yoga Mat",
+          category: "Fitness",
+          brand: "ZenFlex",
+          rating: 4.7,
+          price: 899,
+          img: "https://iklstore.com/wp-content/uploads/2023/10/41qB-OiHs9L._AC_UF8941000_QL80_.jpg",
+        },
+        {
+          id: 108,
+          name: "Laptop Protective Sleeve",
+          category: "Accessories",
+          brand: "SafeTech",
+          rating: 4.2,
+          price: 699,
+          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR606pvxe9EDHlZoYebNgrzZytaIvbcZeWAew&s",
+        },
+        {
+          id: 109,
+          name: "Scented Candle Gift Set",
+          category: "Home & Decor",
+          brand: "CalmAura",
+          rating: 4.8,
+          price: 899,
+          img: "https://us.neomwellbeing.com/cdn/shop/files/The_Mood_Boosting_Routine_2.jpg?v=1760690636&width=800",
+        },
+        {
+          id: 110,
+          name: "Classic Analog Wrist Watch",
+          category: "Fashion",
+          brand: "TimeCraft",
+          rating: 4.1,
+          price: 1299,
+          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlQy8cxRjWvQ_mitnMvpr1keAvq1PXRDmDNA&s",
+        },
+        {
+          id: 111,
+          name: "Marble Pattern Phone Case",
+          category: "Accessories",
+          brand: "CaseArt",
+          rating: 4.5,
+          price: 299,
+          img: "https://printbebo.in/wp-content/uploads/2022/01/1232-Blue-Liquid-Marble-Family-Phone-Case-with-Holder.jpg",
+        },
+        {
+          id: 112,
+          name: "Makeup Organizer Box",
+          category: "Beauty & Care",
+          brand: "GlowStore",
+          rating: 4.6,
+          price: 799,
+          img: "https://cinchhome.in/cdn/shop/files/An_EcQG9HGuZhreniqm4NbR5Ia-_SeHDJdcQn2KmU6kHxSAbONOYqfv9gdSL72vInSM0zmBjswI0KyM1JlylCgwtcwfntT1vRQn-nAKUDjdp7PQpj9f7HmUo9bE-POVPfrr0Yyp5EX8mi3RTEZ9R6mi8LRuWYhlEBptXuqceyqIXZ3qe7aRS7tJ.jpg?v=1739945631&width=1445",
+        },
+      ]; // final product list
+
+      // LocalStorage
+      let cart = JSON.parse(localStorage.getItem("em_cart") || "[]");
+      let wishlist = JSON.parse(localStorage.getItem("em_wish") || "[]");
+
+      function showPage(id) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        if (id === "products") renderProducts();
+        if (id === "cart") renderCart();
+        if (id === "wishlist") renderWishlist();
+        updateCounts();
+      }
+
+      function renderProducts() {
+        const q = document.getElementById("search")?.value.toLowerCase() || "";
+        const s = document.getElementById("sort")?.value || "";
+        let list = [...products];
+        if (q) list = list.filter((p) => p.name.toLowerCase().includes(q));
+        if (s === "price-asc") list.sort((a, b) => a.price - b.price);
+        if (s === "price-desc") list.sort((a, b) => b.price - a.price);
+        const grid = document.getElementById("grid");
+        grid.innerHTML = list
+          .map(
+            (p) => `
+      <div class="card">
+        <img src="${p.img}" alt="${p.name}" />
+        <h4>${p.name}</h4>
+        <div class="meta"><strong>₹${p.price}</strong><div>
+          <button class="btn btn-primary" onclick="addCart(${p.id})">Add</button>
+          <button class="btn btn-ghost" onclick="addWish(${p.id})">❤</button>
+        </div></div>
+      </div>`
+          )
+          .join("");
+      }
+
+      function addCart(id) {
+        if (cart.find((x) => x.id === id)) {
+          alert("Already in cart");
+          return;
+        }
+        const p = products.find((x) => x.id === id);
+        cart.push({ ...p });
+        localStorage.setItem("em_cart", JSON.stringify(cart));
+        updateCounts();
+        alert("Added to cart");
+      }
+      function addWish(id) {
+        if (wishlist.find((x) => x.id === id)) {
+          alert("In wishlist");
+          return;
+        }
+        const p = products.find((x) => x.id === id);
+        wishlist.push({ ...p });
+        localStorage.setItem("em_wish", JSON.stringify(wishlist));
+        updateCounts();
+        alert("Added to wishlist");
+      }
+
+      function renderCart() {
+        const c = document.getElementById("cartList");
+        if (cart.length === 0) {
+          c.innerHTML = '<p class="muted">Cart is empty</p>';
+          document.getElementById("totalAmt").innerText = "0";
+          return;
+        }
+        c.innerHTML = cart
+          .map(
+            (it) =>
+              `<div class="list-item"><img class="thumb" src="${it.img}"/><div style="flex:1"><strong>${it.name}</strong><div class="muted">₹${it.price}</div></div><div><button class="btn btn-ghost" onclick="removeCart(${it.id})">Remove</button></div></div>`
+          )
+          .join("");
+        const total = cart.reduce((s, i) => s + i.price, 0);
+        document.getElementById("totalAmt").innerText = total;
+      }
+      function removeCart(id) {
+        cart = cart.filter((x) => x.id !== id);
+        localStorage.setItem("em_cart", JSON.stringify(cart));
+        renderCart();
+        updateCounts();
+      }
+
+      function renderWishlist() {
+        const c = document.getElementById("wishList");
+        if (wishlist.length === 0) {
+          c.innerHTML = '<p class="muted">No items in wishlist</p>';
+          return;
+        }
+        c.innerHTML = wishlist
+          .map(
+            (it) =>
+              `<div class="list-item"><img class="thumb" src="${it.img}"/><div style="flex:1"><strong>${it.name}</strong><div class="muted">₹${it.price}</div></div><div><button class="btn btn-primary" onclick="moveToCart(${it.id})">Move to Cart</button><button class="btn btn-ghost" onclick="removeWish(${it.id})">Remove</button></div></div>`
+          )
+          .join("");
+      }
+      function moveToCart(id) {
+        if (cart.find((x) => x.id === id)) {
+          alert("Already in cart");
+          return;
+        }
+        const item = wishlist.find((x) => x.id === id);
+        if (!item) return;
+        cart.push(item);
+        wishlist = wishlist.filter((x) => x.id !== id);
+        localStorage.setItem("em_cart", JSON.stringify(cart));
+        localStorage.setItem("em_wish", JSON.stringify(wishlist));
+        renderWishlist();
+        updateCounts();
+        alert("Moved to cart");
+      }
+      function removeWish(id) {
+        wishlist = wishlist.filter((x) => x.id !== id);
+        localStorage.setItem("em_wish", JSON.stringify(wishlist));
+        renderWishlist();
+        updateCounts();
+      }
+
+      function updateCounts() {
+        document.getElementById("cartCount").innerText = cart.length;
+        document.getElementById("wishCount").innerText = wishlist.length;
+      }
+
+      // Auth (demo)
+      function doRegister() {
+        const n = document.getElementById("rName").value;
+        const e = document.getElementById("rEmail").value;
+        const p = document.getElementById("rPass").value;
+        if (!n || !e || !p) {
+          document.getElementById("rMsg").innerText = "Fill all fields";
+          return;
+        }
+        localStorage.setItem("em_user", JSON.stringify({ name: n, email: e }));
+        document.getElementById("rMsg").innerText =
+          "Registered (demo). You can login.";
+      }
+      function doLogin() {
+        const e = document.getElementById("lEmail").value;
+        const p = document.getElementById("lPass").value;
+        const u = JSON.parse(localStorage.getItem("em_user") || "null");
+        if (!u || u.email !== e) {
+          document.getElementById("lMsg").innerText = "Invalid (demo)";
+          return;
+        }
+        document.getElementById("lMsg").innerText = "Logged in (demo)";
+      }
+
+      // Checkout
+      function goPayment() {
+        const n = document.getElementById("aName").value;
+        const ph = document.getElementById("aPhone").value;
+        const line = document.getElementById("aLine").value;
+        if (!n || !ph || !line) {
+          alert("Fill address");
+          return;
+        }
+        sessionStorage.setItem(
+          "em_address",
+          JSON.stringify({
+            n,
+            ph,
+            line,
+            city: document.getElementById("aCity").value,
+            pin: document.getElementById("aPin").value,
+          })
+        );
+        showPage("payment");
+      }
+      function toggleCard() {
+        const v = document.getElementById("payMethod").value;
+        document.getElementById("cardBox").style.display =
+          v === "Card" ? "block" : "none";
+      }
+      function completeOrder() {
+        const m = document.getElementById("payMethod").value;
+        if (!m) {
+          alert("Select payment");
+          return;
+        }
+        const addr = JSON.parse(sessionStorage.getItem("em_address") || "{}");
+        const id = "ORD" + Math.floor(Math.random() * 900000 + 100000);
+        const total = cart.reduce((s, i) => s + i.price, 0);
+        const html = `<h3>Order Confirmed</h3><p>Order ID: <strong>${id}</strong></p><p>Total: ₹${total}</p><h4>Deliver to:</h4><p>${
+          addr.n || ""
+        }<br>${addr.line || ""}<br>${addr.city || ""} - ${addr.pin || ""}</p>`;
+        document.getElementById("confirmBox").innerHTML = html;
+        cart = [];
+        localStorage.setItem("em_cart", JSON.stringify(cart));
+        updateCounts();
+        showPage("confirm");
+      }
+
+      // init
+      function init() {
+        renderProducts();
+        renderCart();
+        renderWishlist();
+        updateCounts();
+      }
+      function renderHomeProducts() {
+        const grid = document.getElementById("homeProducts");
+        if (!grid) return;
+        const list = products.slice(0, 6);
+        grid.innerHTML = list
+          .map(
+            (p) =>
+              `<div class="card"><img src="${p.img}" alt="${p.name}"/><h4>${p.name}</h4><div class="muted">Category: Aesthetic</div></div>`
+          )
+          .join("");
+      }
+      renderHomeProducts();
+      init();
+    </script>
+  </body>
+</html>
